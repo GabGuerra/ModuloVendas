@@ -1,0 +1,47 @@
+﻿@Model
+@{
+    ViewBag.Title = "Index";
+}
+<div class="card col-12" id="containerModulo">
+    <div class="card-body">
+        <form id="CadastroUsuarioForm">
+            <div class="conteudo-form">
+                <div class="form-group">
+                    <svg onclick="history.back(-1)" id="btnVoltar" enable-background="new 0 0 64 64" height="2em" viewBox="0 0 64 64" width="2em" xmlns="http://www.w3.org/2000/svg"><path d="m54 30h-39.899l15.278-14.552c.8-.762.831-2.028.069-2.828-.761-.799-2.027-.831-2.828-.069l-17.448 16.62c-.755.756-1.172 1.76-1.172 2.829 0 1.068.417 2.073 1.207 2.862l17.414 16.586c.387.369.883.552 1.379.552.528 0 1.056-.208 1.449-.621.762-.8.731-2.065-.069-2.827l-15.342-14.552h39.962c1.104 0 2-.896 2-2s-.896-2-2-2z" /></svg>
+                </div>
+                <div class="form-group">
+                    <label for="inputNomeCadastro">Nome</label>
+                    <input id="inputNomeCadastro" name="inputNomeCadastro" type="text" class="form-control" placeholder="Nome">
+                </div>
+                <div class="form-group">
+                    <label for="inputEmailCadastro">Email</label>
+                    <input id="inputEmailCadastro" name="inputEmailCadastro" type="email" class="form-control" aria-describedby="emailHelp" placeholder="E-mail">
+                </div>
+                <div class="form-group">
+                    <label for="inputCpfCadastroUsuario">CPF</label>
+                    <input id="inputCpfCadastroUsuario" name="inputCpfCadastroUsuario" type="text" class="form-control" placeholder="000.000.000-0">
+                </div>
+                <div class="form-group">
+                    <label for="inputSenhaCadastro">Senha</label>
+                    <input id="inputSenhaCadastro" name="inputSenhaCadastro" type="password" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label for="inputConfirmacaoSenha">Confirmação de senha</label>
+                    <input id="inputConfirmacaoSenha" name="inputConfirmacaoSenha" type="password" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <button class="btn_3 col-12">Criar conta</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.0/jquery.mask.js"></script>
+<script src="~/js/Usuario/CadastroUsuario.js"></script>
+
+<style>
+    #btnVoltar:hover {
+        cursor: pointer
+    }
+</style>
