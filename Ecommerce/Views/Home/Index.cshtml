@@ -1,8 +1,96 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
+    Layout = "_Layout";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome (produtos aqui )</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+@*<div class="text-center">
+        <h1 class="display-4">Welcome (produtos aqui )</h1>
+        <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    </div>*@
+<!-- slider -->
+<div class="slider-area ">
+    <!-- Mobile Menu -->
+    <div class="single-slider slider-height2 d-flex align-items-center" data-background="assets/img/hero/category.jpg">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="hero-cap text-center">
+                        <h2>Produtos</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+<!-- slider -->
+<!-- inicio lsita produto-->
+<section class="product_list section_padding">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="product_sidebar">
+                    <div class="single_sedebar">
+                        <form action="#">
+                            <input type="text" name="#" placeholder="Pesquisar">
+                            <a onclick="alert('não implementado')">
+                                <i class="fas fa-search"></i>
+                            </a>
+
+                        </form>
+                    </div>
+                    <div class="single_sedebar">
+                        @{
+                            var Listacategorias = new string[5];
+                            for (var i = 0; i <= Listacategorias.Length - 1; i++)
+                            {
+                                Listacategorias[i] = "Categoria " + i;
+                            }
+                        }
+                        <div class="select_option">
+                            <div class="select_option_list">Categoria <i class="right fas fa-caret-down"></i> </div>
+                            <div class="select_option_dropdown">
+                                @foreach (var categoria in Listacategorias)
+                                {
+                                    <p><a href="#">@categoria</a></p>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="product_list">
+                    <div class="row">
+                        @{var listaProdutos = new string[5];
+                            for (var i = 0; i <= listaProdutos.Length - 1; i++)
+                            {
+                                listaProdutos[i] = "Produto " + i;
+                            }
+                        } <!-- delete this-->
+                        <!-- LISTA DE PRODUTOS RETORNADOS DO BACKEND-->
+                        @foreach (var Produto in listaProdutos)
+                        {
+                            <div class="col-lg-6 col-sm-6">
+                                <div class="single_product_item">
+                                    <img src="assets/img/categori/product6.png" alt="" class="img-fluid">
+                                    <h3>
+                                        <!-- NOME DO PRODUTO-->
+                                        <a href='@Url.Action("Produto","Produto")'>
+                                            @Produto
+                                        </a>
+                                    </h3>
+                                    <!--PREÇO PRODUTO-->
+                                    <p>R$xxx</p>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    <div class="load_more_btn text-center">
+                        <a href="#" class="btn_3">Carregar Mais</a> <!-- VERIFICAR COMO VAI SER IMPLEMENTADO-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- fim lista produto-->
