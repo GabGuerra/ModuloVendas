@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Ecommerce.Models.Resultado;
+using Ecommerce.Models;
 using Ecommerce.Services.Login;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -22,14 +23,17 @@ namespace Ecommerce.Controllers
         {
             return View();
         }
-
-        public JsonResult RealizarLogin(string email, string senha)
+        public JsonResult RealizarLogin(LoginVD login)
         {
-            ResultadoVD resultado = _loginService.RealizarLogin(email, senha);
-            if (resultado.Sucesso)
-                HttpContext.Session.SetString("usuarioLogado", JsonConvert.SerializeObject(resultado.ObjResultado));
+            ResultadoVD result = new ResultadoVD();
+            UsuarioVD usuario = _loginService.RealizarLogin(login);
+            result.Sucesso = usuario != null;
+            if (result.Sucesso)
+                HttpContext.Session.SetString("usuarioLogado", JsonConvert.SerializeObject(usuario));
 
-            return Json(resultado);
+            result.Mensagem = result.Sucesso ? string.Empty : "Email e/ou senha incorretos.";
+
+            return Json(result);
         }
     }
 }

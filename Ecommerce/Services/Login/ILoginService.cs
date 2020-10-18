@@ -1,4 +1,5 @@
 ﻿using Ecommerce.Models.Resultado;
+using Ecommerce.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +9,6 @@ namespace Ecommerce.Services.Login
 {
     public interface ILoginService
     {
-        public ResultadoVD RealizarLogin(string email, string senha);
+        public UsuarioVD RealizarLogin(LoginVD login);
     }
 }

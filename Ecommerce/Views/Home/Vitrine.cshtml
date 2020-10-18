@@ -1,8 +1,8 @@
-﻿@{
+﻿@model Ecommerce.Models.Vitrine.VitrineVD
+@{
     ViewData["Title"] = "Home Page";
     Layout = "_Layout";
 }
-
 @*<div class="text-center">
         <h1 class="display-4">Welcome (produtos aqui )</h1>
         <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
@@ -10,7 +10,7 @@
 <!-- slider -->
 <div class="slider-area ">
     <!-- Mobile Menu -->
-    <div class="single-slider slider-height2 d-flex align-items-center" data-background="assets/img/hero/category.jpg">
+    <div class="single-slider slider-height2 d-flex align-items-center" data-background="~/assets/img/hero/category.jpg">
         <div class="container">
             <div class="row">
                 <div class="col-xl-12">
@@ -38,20 +38,13 @@
 
                         </form>
                     </div>
-                    <div class="single_sedebar">
-                        @{
-                            var Listacategorias = new string[5];
-                            for (var i = 0; i <= Listacategorias.Length - 1; i++)
-                            {
-                                Listacategorias[i] = "Categoria " + i;
-                            }
-                        }
+                    <div class="single_sedebar">                      
                         <div class="select_option">
                             <div class="select_option_list">Categoria <i class="right fas fa-caret-down"></i> </div>
                             <div class="select_option_dropdown">
-                                @foreach (var categoria in Listacategorias)
+                                @foreach (var categoria in  Model.ListaCategorias)
                                 {
-                                    <p><a href="#">@categoria</a></p>
+                                    <p><a href="#">@categoria.NomeCategoria</a></p>
                                 }
                             </div>
                         </div>
@@ -60,27 +53,18 @@
             </div>
             <div class="col-md-8">
                 <div class="product_list">
-                    <div class="row">
-                        @{var listaProdutos = new string[5];
-                            for (var i = 0; i <= listaProdutos.Length - 1; i++)
-                            {
-                                listaProdutos[i] = "Produto " + i;
-                            }
-                        } <!-- delete this-->
-                        <!-- LISTA DE PRODUTOS RETORNADOS DO BACKEND-->
-                        @foreach (var Produto in listaProdutos)
-                        {
+                    <div class="row">                                               
+                        @foreach (var p in Model.ListaProdutos)
+                        {   
                             <div class="col-lg-6 col-sm-6">
                                 <div class="single_product_item">
-                                    <img src="assets/img/categori/product6.png" alt="" class="img-fluid">
-                                    <h3>
-                                        <!-- NOME DO PRODUTO-->
+                                    <img src="@Url.Content(p.CaminhoImagem)" alt="" class="img-fluid product_img">
+                                    <h3>                                        
                                         <a href='@Url.Action("Produto","Produto")'>
-                                            @Produto
+                                            @p.NomeProduto
                                         </a>
-                                    </h3>
-                                    <!--PREÇO PRODUTO-->
-                                    <p>R$xxx</p>
+                                    </h3>                                    
+                                    <p>R$ @p.PrecoVenda</p>
                                 </div>
                             </div>
                         }
@@ -93,4 +77,10 @@
         </div>
     </div>
 </section>
-<!-- fim lista produto-->
+
+<style>
+    .product_img {
+        width: 395px;
+        height: 395px;
+    }
+</style>

@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Ecommerce.Models.Usuario
+namespace Ecommerce.Models
 {
     public class UsuarioVD
     {
         public UsuarioVD()
         {
+            Login = new LoginVD();
         }
         public UsuarioVD(LoginVD login)
         {

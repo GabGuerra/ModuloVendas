@@ -8,13 +8,68 @@ using System.Threading.Tasks;
 
 namespace Ecommerce.Repositories.Shared
 {
-    public abstract class DbRepository
+    public abstract class DbRepository<T> where T : class
     {
-        private static MySqlConnection _conn;
+        internal static MySqlConnection _conn;
 
         public DbRepository(IConfiguration config)
         {
             _conn = new MySqlConnection(config.GetConnectionString("ConexaoPadrao"));
+        }
+
+        public virtual T PopularDados(MySqlDataReader dr)
+        {
+            return null;
+        }
+
+        protected IEnumerable<T> ObterRegistros(MySqlCommand cmd)
+        {
+            var lista = new List<T>();
+            cmd.Connection = _conn;
+            _conn.Open();
+            try
+            {
+                var dr = cmd.ExecuteReader();
+                try
+                {
+                    while (dr.Read())
+                        lista.Add(PopularDados(dr));
+                }
+                finally
+                {
+                    dr.Close();
+                }
+            }
+            finally
+            {
+                _conn.Close();
+            }
+            return lista;
+        }
+
+        protected T ObterRegistro(MySqlCommand cmd)
+        {
+            T registro = null;
+            cmd.Connection = _conn;
+            _conn.Open();
+            try
+            {
+                var dr = cmd.ExecuteReader();
+                try
+                {
+                    if (dr.Read())
+                        registro = PopularDados(dr);
+                }
+                finally
+                {
+                    dr.Close();
+                }
+            }
+            finally
+            {
+                _conn.Close();
+            }
+            return registro;
         }
 
         protected void ExecutarComando(MySqlCommand cmd)

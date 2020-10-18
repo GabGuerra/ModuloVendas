@@ -1,31 +1,32 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using Ecommerce.Models;
+using Ecommerce.Services.Categoria;
+using Ecommerce.Services.Produto;
+using Ecommerce.Models.Vitrine;
 
 namespace Ecommerce.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        private readonly ICategoriaService _categoriaService;
+        private readonly IProdutoService _produtoService;
+        public HomeController(ICategoriaService categoriaService, IProdutoService produtoService)
         {
-            _logger = logger;
+            _categoriaService = categoriaService;
+            _produtoService = produtoService;
         }
 
-        public IActionResult Index()
+        public IActionResult Vitrine()
         {
-            return View();
+            return View(new VitrineVD(_produtoService.ListarProdutos(), _categoriaService.ListarCategorias()));
         }
 
         public IActionResult Privacy()
         {
             return View();
-        }     
+        }
     }
 }

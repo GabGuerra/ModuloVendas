@@ -2,8 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Ecommerce.Repositories.Categoria;
 using Ecommerce.Repositories.Login;
+using Ecommerce.Repositories.Produto;
+using Ecommerce.Repositories.Usuario;
+using Ecommerce.Services.Categoria;
 using Ecommerce.Services.Login;
+using Ecommerce.Services.Produto;
+using Ecommerce.Services.Usuario;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -41,11 +47,23 @@ namespace Ecommerce
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
             services.AddMvc().AddRazorRuntimeCompilation();
-            services.AddControllersWithViews();             
+            services.AddControllersWithViews();
             services.AddHttpContextAccessor();
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);            
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
+
+
             services.AddTransient<ILoginService, LoginService>();
             services.AddTransient<ILoginRepository, LoginRepository>();
+
+            services.AddTransient<IUsuarioService, UsuarioService>();
+            services.AddTransient<IUsuarioRepository, UsuarioRepository>();
+
+
+            services.AddTransient<ICategoriaService, CategoriaService>();
+            services.AddTransient<ICategoriaRepository, CategoriaRepository>();
+
+            services.AddTransient<IProdutoService, ProdutoService>();
+            services.AddTransient<IProdutoRepository, ProdutoRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -63,7 +81,7 @@ namespace Ecommerce
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
+            app.UseSession();
             app.UseRouting();
 
             app.UseAuthorization();

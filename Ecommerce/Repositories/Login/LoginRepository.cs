@@ -1,4 +1,5 @@
-﻿using Ecommerce.Repositories.Shared;
+﻿using Ecommerce.Models;
+using Ecommerce.Repositories.Shared;
 using Microsoft.Extensions.Configuration;
 using MySql.Data.MySqlClient;
 using System;
@@ -9,11 +10,11 @@ using System.Threading.Tasks;
 
 namespace Ecommerce.Repositories.Login
 {
-    public class LoginRepository : DbRepository, ILoginRepository
+    public class LoginRepository : DbRepository<UsuarioVD>, ILoginRepository
     {
         public LoginRepository(IConfiguration config) : base(config) { }
 
-        public IDataReader RealizarLogin(string email, string senha)
+        public UsuarioVD RealizarLogin(string email, string senha)
         {
             string sql = @"SELECT 
                                U.NOME_USUARIO,
@@ -31,8 +32,19 @@ namespace Ecommerce.Repositories.Login
             {
                 cmd.Parameters.AddWithValue("@SENHA", senha);
                 cmd.Parameters.AddWithValue("@EMAIL", email);
-                return cmd.ExecuteReader();
+                UsuarioVD usuario = ObterRegistro(cmd);
+                usuario.Login = new LoginVD(email, senha);
+                return usuario;
             }
+        }
+
+        public override UsuarioVD PopularDados(MySqlDataReader dr)
+        {
+            return new UsuarioVD
+            {
+                Cpf = dr["CPF"].ToString(),
+                Nome = dr["NOME_USUARIO"].ToString()
+            };
         }
     }
 }

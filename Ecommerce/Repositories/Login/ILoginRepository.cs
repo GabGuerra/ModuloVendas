@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Ecommerce.Models;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -8,6 +9,6 @@ namespace Ecommerce.Repositories.Login
 {
     public interface ILoginRepository
     {
-        public IDataReader RealizarLogin(string email, string senha);
+        public UsuarioVD RealizarLogin(string email, string senha);
     }
 }

@@ -12,15 +12,7 @@ function RegistrarEventoSubmitForm() {
         let cpf = $('#inputCpfCadastroUsuario').val();
         let senha = $('#inputSenhaCadastro').val();
         let confirmacaoSenha = $('#inputConfirmacaoSenha').val();
-
-        let usuario = {
-            Cpf: cpf,
-            Nome: nome,
-            Login: {
-                Email: email,
-                Senha: senha
-            }
-        };
+        
         if (senha == confirmacaoSenha) {
             $.ajax({
                 url: "/Usuario/InserirUsuario",
@@ -30,7 +22,7 @@ function RegistrarEventoSubmitForm() {
                 success: function (result) {
                     if (result.sucesso) {
                         alert("Sucesso");
-                        RedirecionaParaPagina("Usuario", "CadastroUsuario");
+                        RedirecionaParaPagina("Login", "Login");
                     }
                     else
                         alert(result.mensagem);
