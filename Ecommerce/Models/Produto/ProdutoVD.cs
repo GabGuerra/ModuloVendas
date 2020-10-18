@@ -10,26 +10,26 @@ namespace Ecommerce.Models.Produto
     public class ProdutoVD
     {
         public int? CodProduto { get; set; }
+        public int QtdDisponivel { get; set; }
         public string NomeProduto { get; set; }
-        public double? PrecoCustoMedio { get; set; }        
-        public double PrecoVenda { get => PrecoCustoMedio.Value + PrecoCustoMedio.Value * 0.15; set { } }
-        public string CaminhoImagem { get; set; }
-
+        public string CaminhoImagemPrincipal { get; set; }
+        public string DscProduto { get; set; }
+        public double? PrecoCustoMedio { get; set; }
+        public double PrecoVenda { get => PrecoCustoMedio.Value + PrecoCustoMedio.Value * 0.15; set { } } //Valor p/ calculo virá da base futuramente
         public FornecedorVD Fornecedor { get; set; }
-        public CategoriaVD Categoria { get; set; } 
+        public CategoriaVD Categoria { get; set; }
+        public List<ImagemProdutoVD> ListaImagens { get; set; }
         public ProdutoVD()
-        {            
+        {
             Fornecedor = new FornecedorVD();
         }
-        public ProdutoVD(string NomeProduto)
+        public ProdutoVD(int? codProduto, string nomeProduto, double? precoCustoMedio, string caminhoImagemPrincipal, int qtdDisponivel, FornecedorVD fornecedor, CategoriaVD categoria)
         {
-        }
-        public ProdutoVD(int? codProduto, string nomeProduto, double? precoCustoMedio,string caminhoImagem, FornecedorVD fornecedor, CategoriaVD categoria)
-        {
-            CodProduto = CodProduto;
+            CodProduto = codProduto;
             NomeProduto = nomeProduto;
             PrecoCustoMedio = precoCustoMedio;
-            CaminhoImagem = caminhoImagem;
+            CaminhoImagemPrincipal = caminhoImagemPrincipal;
+            QtdDisponivel = qtdDisponivel;
             Fornecedor = fornecedor;
             Categoria = categoria;
         }

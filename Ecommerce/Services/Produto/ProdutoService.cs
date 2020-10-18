@@ -18,5 +18,12 @@ namespace Ecommerce.Services.Produto
         {
             return _produtoRepository.ListarProdutos();
         }
+
+        public ProdutoVD CarregarDetalheProduto(int codProduto)
+        {
+            ProdutoVD produto = _produtoRepository.CarregarDetalheProduto(codProduto);
+            produto.ListaImagens = _produtoRepository.ListarImagensProduto(codProduto);
+            return produto;
+        }
     }
 }
