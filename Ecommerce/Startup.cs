@@ -2,10 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Ecommerce.Repositories.Carrinho;
 using Ecommerce.Repositories.Categoria;
 using Ecommerce.Repositories.Login;
 using Ecommerce.Repositories.Produto;
 using Ecommerce.Repositories.Usuario;
+using Ecommerce.Services.Carrinho;
 using Ecommerce.Services.Categoria;
 using Ecommerce.Services.Login;
 using Ecommerce.Services.Produto;
@@ -64,6 +66,9 @@ namespace Ecommerce
 
             services.AddTransient<IProdutoService, ProdutoService>();
             services.AddTransient<IProdutoRepository, ProdutoRepository>();
+
+            services.AddTransient<ICarrinhoService, CarrinhoService>();
+            services.AddTransient<ICarrinhoRepository, CarrinhoRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

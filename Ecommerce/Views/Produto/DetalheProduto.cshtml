@@ -3,7 +3,6 @@
     ViewData["Title"] = "Produto";
     Layout = "_Layout";
 }
-
 <!-- slider Area Start-->
 <div class="slider-area ">
     <!-- Mobile Menu -->
@@ -33,29 +32,32 @@
                                 <img src=@Url.Content(img.CaminhoImagem) alt="#" class="img-fluid">
                             </div>
                         }
-                    }                    
+                    }
                 </div>
             </div>
             <div class="col-lg-8">
                 <div class="single_product_text text-center">
                     <h3>
-                        @Model.NomeProduto                        
+                        @Model.NomeProduto
                     </h3>
                     <p>
-                       @Model.DscProduto 
+                        @Model.DscProduto
                     </p>
                     <p>Quantidade em estoque: @Model.QtdDisponivel</p>
                     <div class="card_area">
-                        <div class="product_count_area">                            
+                        <div class="product_count_area">
                             <div class="product_count d-inline-block">
-                                <span class="product_count_item inumber-decrement"> <i class="ti-minus"></i></span>
-                                <input class="product_count_item input-number" type="text" value="1" min="0" max="10">
-                                <span class="product_count_item number-increment"> <i class="ti-plus"></i></span>
+                                <span class="product_count_item inumber-decrement" onclick="decrementarContador()"> <i class="ti-minus"></i></span>
+                                <input class="product_count_item input-number" id="contQtdItem" type="text" value="0" min="0" max="10">
+                                <span class="product_count_item number-increment" onclick="incrementarContador()"> <i class="ti-plus"></i></span>
                             </div>
-                            <p>R$ @Model.PrecoVenda</p>
+                            <input type="hidden" id="valPrecoOriginal" value="@Model.PrecoVenda" />
+                            <input type="hidden" id="codProduto" value="@Model.CodProduto" />
+
+                            <p>R$ <span id="spanPreco">@Model.PrecoVenda</span></p>
                         </div>
                         <div class="add_to_cart">
-                            <a href="#" class="btn_3">Adicionar ao carrinho</a>
+                            <button onclick="AdicionarAoCarrinho()" class="btn_3">Adicionar ao carrinho</button>
                         </div>
                     </div>
                 </div>
@@ -63,3 +65,5 @@
         </div>
     </div>
 </div>
+
+<script src="~/js/Produto/DetalheProduto.js"></script>

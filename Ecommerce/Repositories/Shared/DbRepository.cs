@@ -72,14 +72,14 @@ namespace Ecommerce.Repositories.Shared
             return registro;
         }
 
-        protected void ExecutarComando(MySqlCommand cmd)
+        protected int ExecutarComando(MySqlCommand cmd)
         {
             cmd.Connection = _conn;
             cmd.CommandType = CommandType.Text;
             _conn.Open();
             try
             {
-                cmd.ExecuteNonQuery();
+                return Convert.ToInt32(cmd.ExecuteScalar());
             }
             finally
             {

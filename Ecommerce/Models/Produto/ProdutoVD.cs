@@ -23,6 +23,17 @@ namespace Ecommerce.Models.Produto
         {
             Fornecedor = new FornecedorVD();
         }
+        public ProdutoVD(int? codProduto)
+        {
+            CodProduto = codProduto;
+        }
+        public ProdutoVD(int? codProduto, string nomeProduto, double? precoCustoMedio, string caminhoImagemPrincipal)
+        {
+            CodProduto = codProduto;
+            NomeProduto = nomeProduto;
+            PrecoCustoMedio = precoCustoMedio;
+            CaminhoImagemPrincipal = caminhoImagemPrincipal;
+        }
         public ProdutoVD(int? codProduto, string nomeProduto, double? precoCustoMedio, string caminhoImagemPrincipal, int qtdDisponivel, FornecedorVD fornecedor, CategoriaVD categoria)
         {
             CodProduto = codProduto;
