@@ -25,7 +25,7 @@ namespace Ecommerce.Controllers
                 codCarrinhoCookie = Convert.ToInt32(resultado.ObjResultado);
                 Response.Cookies.Append("codCarrinho", codCarrinhoCookie.ToString());                
             }
-            _carrinhoService.AdicionarItem(codProduto, qtdProduto, codCarrinhoCookie.Value);
+            _carrinhoService.AdicionarItem(codProduto, qtdProduto, codCarrinhoCookie.Value, cpfUsuario);
 
             return Json(resultado);
         }

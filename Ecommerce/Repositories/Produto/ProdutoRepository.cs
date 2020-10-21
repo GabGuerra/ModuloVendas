@@ -25,13 +25,21 @@ namespace Ecommerce.Repositories.Produto
                                F.COD_FORNECEDOR,
                                F.NOME_FORNECEDOR,
                                C.COD_CATEGORIA,
-                               C.NOME_CATEGORIA                              
+                               C.NOME_CATEGORIA,
+                               (SELECT 
+									COUNT(1)
+								FROM 
+									CAMPANHA_FORNECEDOR_PRODUTO CFP 
+								WHERE 
+									CFP.COD_PRODUTO = P.COD_PRODUTO 
+								AND CURDATE() BETWEEN CFP.DAT_INICIO_CAMPANHA AND CFP.DAT_FIM_CAMPANHA) AS IND_DESTAQUE
                            FROM
 	                           PRODUTO P
                            INNER JOIN CATEGORIA C ON P.COD_CATEGORIA = C.COD_CATEGORIA
                            INNER JOIN FORNECEDOR F ON P.COD_FORNECEDOR = F.COD_FORNECEDOR
                            INNER JOIN PRODUTO_DEPOSITO PD ON P.COD_PRODUTO = PD.COD_PRODUTO
-                           INNER JOIN DEPOSITO D ON PD.COD_DEPOSITO = D.COD_DEPOSITO;";
+                           INNER JOIN DEPOSITO D ON PD.COD_DEPOSITO = D.COD_DEPOSITO
+                           ORDER BY IND_DESTAQUE DESC";
 
             List<ProdutoVD> listaProdutos = new List<ProdutoVD>();
 
@@ -54,7 +62,14 @@ namespace Ecommerce.Repositories.Produto
                                F.COD_FORNECEDOR,
                                F.NOME_FORNECEDOR,
                                C.COD_CATEGORIA,
-                               C.NOME_CATEGORIA                              
+                               C.NOME_CATEGORIA,                                                        
+                               (SELECT 
+									COUNT(1)
+								FROM 
+									CAMPANHA_FORNECEDOR_PRODUTO CFP 
+								WHERE 
+									CFP.COD_PRODUTO = P.COD_PRODUTO 
+								AND CURDATE() BETWEEN CFP.DAT_INICIO_CAMPANHA AND CFP.DAT_FIM_CAMPANHA) AS IND_DESTAQUE
                            FROM
 	                           PRODUTO P
                            INNER JOIN CATEGORIA C ON P.COD_CATEGORIA = C.COD_CATEGORIA
@@ -81,10 +96,11 @@ namespace Ecommerce.Repositories.Produto
                     Convert.ToInt32(dr["COD_PRODUTO"]),
                     dr["NOME_PRODUTO"].ToString(),
                     Convert.ToDouble(dr["PRECO_CUSTO_MEDIO"]),
-                    dr["CAMINHO_IMG_PRINCIPAL"].ToString(),
+                    dr["CAMINHO_IMG_PRINCIPAL"].ToString(),                     
                     Convert.ToInt32(dr["QTD_DISPONIVEL"]),
                     new FornecedorVD(Convert.ToInt32(dr["COD_FORNECEDOR"]), dr["NOME_FORNECEDOR"].ToString()),
-                    new CategoriaVD(Convert.ToInt32(dr["COD_CATEGORIA"]), dr["NOME_CATEGORIA"].ToString())
+                    new CategoriaVD(Convert.ToInt32(dr["COD_CATEGORIA"]), dr["NOME_CATEGORIA"].ToString()),
+                    Convert.ToBoolean(dr["IND_DESTAQUE"])
                 );
         }
 

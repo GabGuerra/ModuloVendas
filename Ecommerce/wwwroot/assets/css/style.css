@@ -10890,7 +10890,7 @@ input:focus {
             .cart_inner .table tbody tr td .media .d-flex img {
                 border: 1px solid #eeeeee;
                 border-radius: 3px;
-                max-width: 150px;
+                max-width: 200px;
             }
 
         /* line 1136, ../../SAIFUL/Running_project/250 eCommerce_HTML/250 eCommerce_HTML/250 eCommerce_HTML/assets/scss/_product.scss */
@@ -10906,7 +10906,7 @@ input:focus {
 
         /* line 1146, ../../SAIFUL/Running_project/250 eCommerce_HTML/250 eCommerce_HTML/250 eCommerce_HTML/assets/scss/_product.scss */
         .cart_inner .table tbody tr td h5 {
-            font-size: 18px;
+            font-size: 21px;
             color: #415094;
             font-family: "Playfair Display", serif;
             margin-bottom: 0px;

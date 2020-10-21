@@ -50,12 +50,16 @@
                         {   
                             <div class="col-lg-6 col-sm-6">
                                 <div class="single_product_item">
-                                    <img src="@Url.Content(p.CaminhoImagemPrincipal)" alt="" class="img-fluid product_img">
-                                    <h3>                                        
+                                    <img src="@Url.Content(p.CaminhoImagemPrincipal)" style="position: relative" class="img-fluid product_img">
+                                    @if (p.IndProdutoEmDestaque)
+                                    {
+                                        <img src="~/assets/img/product/produto_em_destaque.png" style="position: absolute; width: 100px; height:100px;left: 245px;">
+                                    }
+                                    <h3>
                                         <a href='@Url.Action("DetalheProduto","Produto", new { codProduto = p.CodProduto })'>
                                             @p.NomeProduto
                                         </a>
-                                    </h3>                                    
+                                    </h3>
                                     <p>R$ @p.PrecoVenda</p>
                                 </div>
                             </div>

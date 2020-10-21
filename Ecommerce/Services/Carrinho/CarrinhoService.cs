@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Ecommerce.Models.Carrinho;
 using Ecommerce.Models.Resultado;
@@ -17,12 +18,13 @@ namespace Ecommerce.Services.Carrinho
             _carrinhoRepository = carrinhoRepository;
 
         }
-        public ResultadoVD AdicionarItem(int codProduto, int qtdAdicionar, int codCarrinho)
+        public ResultadoVD AdicionarItem(int codProduto, int qtdAdicionar, int codCarrinho, string cpfUsuario)
         {
             ResultadoVD resultado = new ResultadoVD(true);
             try
             {
                 _carrinhoRepository.AdicionarItem(new CarrinhoItemVD(codProduto, qtdAdicionar), codCarrinho);
+
             }
             catch (Exception ex)
             {
@@ -32,6 +34,19 @@ namespace Ecommerce.Services.Carrinho
 
             return resultado;
         }
+
+        //public async Task<ResultadoVD> ReservarEstoque(int codProduto, int qtdAdicionar, string cpfUsuario) 
+        //{
+        //    using (var httpClient = new HttpClient())
+        //    {
+        //        StringContent content = new StringContent();
+        //        using (var res = await httpClient.PostAsync("http://localhost:8888/api/Movimentacao/MovimentarProdutos",))
+        //        {
+
+        //        }
+        //    }
+            
+        //}
 
         public CarrinhoVD CarregarDetalheCarrinho(int codCarrinho)
         {
