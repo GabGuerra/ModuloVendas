@@ -5,7 +5,6 @@
 <html>
 <body>
     <!-- slider Area Start-->
-    
     <!-- slider Area End-->
     <!--================Cart Area =================-->
     <section class="cart_area section_padding">
@@ -31,6 +30,9 @@
                                             <div class="d-flex">
                                                 <img src="@Url.Content(item.Produto.CaminhoImagemPrincipal)" alt="" />
                                             </div>
+                                            <div>
+                                                <a href="#" class="btn_1">Remover item</a>
+                                            </div>
                                             <div class="media-body">
                                                 <p>@item.Produto.DscProduto</p>
                                             </div>
@@ -51,9 +53,10 @@
                                         <h5>R$ @precoProduto</h5>
                                     </td>
                                 </tr>
+
                             }
 
-                            
+
                             <tr>
                                 <td></td>
                                 <td></td>
@@ -66,7 +69,9 @@
                             </tr>
                         </tbody>
                     </table>
+                    
                     <div class="checkout_btn_inner float-right">
+                        <a href="#" class="btn_1" style="background-color:#ca1527; margin-right:340px">Cancelar compra</a>
                         <a class="btn_1" href="#">Continuar comprando</a>
                         <a class="btn_1 checkout_btn_1" href="@Url.Action("FinalizarCompra","Carrinho")">Finalizar compra</a>
                     </div>

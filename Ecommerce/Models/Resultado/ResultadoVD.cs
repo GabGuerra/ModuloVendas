@@ -9,16 +9,16 @@ namespace Ecommerce.Models.Resultado
     {
         public string Mensagem { get; set; }
         public bool Sucesso { get; set; }
-        public object ObjResultado { get; set; }
+        public object Resultado { get; set; }
         public ResultadoVD()
         {
 
         }
-        public ResultadoVD(string mensagem, bool sucesso, object objResultado)
+        public ResultadoVD(string mensagem, bool sucesso, object resultado)
         {
             Mensagem = mensagem;
             Sucesso = sucesso;
-            ObjResultado = objResultado;
+            Resultado = resultado;
         }
         public ResultadoVD(string mensagem, bool sucesso)
         {

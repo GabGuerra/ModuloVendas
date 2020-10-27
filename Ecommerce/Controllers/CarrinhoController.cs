@@ -15,17 +15,17 @@ namespace Ecommerce.Controllers
         {
             _carrinhoService = carrinhoService;
         }
-        public JsonResult AdicionarItem(int codProduto, int qtdProduto, string cpfUsuario)
+        public JsonResult AdicionarItem(int codProduto, int qtdProduto, string cpfUsuario, int codDeposito)
         {
             ResultadoVD resultado = new ResultadoVD(true);
             int? codCarrinhoCookie = Convert.ToInt32(Request.Cookies["codCarrinho"]);
             if (!codCarrinhoCookie.HasValue || codCarrinhoCookie == 0) 
             {
                 resultado = _carrinhoService.CriarCarrinho(cpfUsuario);
-                codCarrinhoCookie = Convert.ToInt32(resultado.ObjResultado);
+                codCarrinhoCookie = Convert.ToInt32(resultado.Resultado);
                 Response.Cookies.Append("codCarrinho", codCarrinhoCookie.ToString());                
             }
-            _carrinhoService.AdicionarItem(codProduto, qtdProduto, codCarrinhoCookie.Value, cpfUsuario);
+             _carrinhoService.AdicionarItem(codProduto, qtdProduto, codCarrinhoCookie.Value, cpfUsuario, codDeposito);
 
             return Json(resultado);
         }

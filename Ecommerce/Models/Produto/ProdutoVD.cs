@@ -17,6 +17,7 @@ namespace Ecommerce.Models.Produto
         public double? PrecoCustoMedio { get; set; }
         public double PrecoVenda { get => PrecoCustoMedio.Value + PrecoCustoMedio.Value * 0.15; set { } } //Valor p/ calculo virá da base futuramente
         public bool IndProdutoEmDestaque { get; set; }
+        public int CodDeposito { get; set; }
         public FornecedorVD Fornecedor { get; set; }
         public CategoriaVD Categoria { get; set; }
         public List<ImagemProdutoVD> ListaImagens { get; set; }
@@ -35,7 +36,7 @@ namespace Ecommerce.Models.Produto
             PrecoCustoMedio = precoCustoMedio;
             CaminhoImagemPrincipal = caminhoImagemPrincipal;
         }
-        public ProdutoVD(int? codProduto, string nomeProduto, double? precoCustoMedio, string caminhoImagemPrincipal, int qtdDisponivel, FornecedorVD fornecedor, CategoriaVD categoria, bool indProdutoEmDestaque)
+        public ProdutoVD(int? codProduto, string nomeProduto, double? precoCustoMedio, string caminhoImagemPrincipal, int qtdDisponivel, FornecedorVD fornecedor, CategoriaVD categoria, bool indProdutoEmDestaque, int codDeposito)
         {
             CodProduto = codProduto;
             NomeProduto = nomeProduto;
@@ -45,6 +46,7 @@ namespace Ecommerce.Models.Produto
             Fornecedor = fornecedor;
             Categoria = categoria;
             IndProdutoEmDestaque = indProdutoEmDestaque;
+            CodDeposito = codDeposito;
         }
     }
 }

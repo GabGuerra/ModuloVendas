@@ -12,24 +12,31 @@ function decrementarContador() {
 }
 
 function AtualizarPreco() {
-    $("#spanPreco").text(Number($("#valPrecoOriginal").val()) * Number($("#contQtdItem").val()));
+    $("#spanPreco").text(Number($("#valPrecoOriginal").val().replace(",", ".")) * Number($("#contQtdItem").val()));
 }
 
-function AdicionarAoCarrinho() {    
+function AdicionarAoCarrinho() {
     let param = {
         CodProduto: $("#codProduto").val(),
         QtdProduto: $("#contQtdItem").val(),
-        CpfUsuario: ""
+        CpfUsuario: "",
+        CodDeposito: $("#hdnCodDeposito").val()
     }
 
     $.ajax({
         url: "/Carrinho/AdicionarItem",
-        data: { codProduto: param.CodProduto, qtdProduto: param.QtdProduto, cpfUsuario: param.CpfUsuario },
+        data:
+        {
+            codProduto: param.CodProduto,
+            qtdProduto: param.QtdProduto,
+            cpfUsuario: param.CpfUsuario,
+            codDeposito: param.CodDeposito
+        },
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (result) {
             if (result.sucesso) {
-                alert("Sucesso");                
+                alert("Sucesso");
             }
             else
                 alert(result.mensagem);

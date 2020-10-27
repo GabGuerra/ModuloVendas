@@ -2,6 +2,7 @@
 using Ecommerce.Models.Fornecedor;
 using Ecommerce.Models.Produto;
 using Ecommerce.Repositories.Shared;
+using Ecommerce.Utils;
 using Microsoft.Extensions.Configuration;
 using MySql.Data.MySqlClient;
 using System;
@@ -32,7 +33,8 @@ namespace Ecommerce.Repositories.Produto
 									CAMPANHA_FORNECEDOR_PRODUTO CFP 
 								WHERE 
 									CFP.COD_PRODUTO = P.COD_PRODUTO 
-								AND CURDATE() BETWEEN CFP.DAT_INICIO_CAMPANHA AND CFP.DAT_FIM_CAMPANHA) AS IND_DESTAQUE
+								AND CURDATE() BETWEEN CFP.DAT_INICIO_CAMPANHA AND CFP.DAT_FIM_CAMPANHA) AS IND_DESTAQUE,
+                                D.COD_DEPOSITO
                            FROM
 	                           PRODUTO P
                            INNER JOIN CATEGORIA C ON P.COD_CATEGORIA = C.COD_CATEGORIA
@@ -56,7 +58,7 @@ namespace Ecommerce.Repositories.Produto
             string sql = @"SELECT
 	                           P.COD_PRODUTO,
                                P.NOME_PRODUTO,
-                               P.PRECO_CUSTO_MEDIO,
+                               NVL(P.PRECO_CUSTO_MEDIO,0.0) AS PRECO_CUSTO_MEDIO,
                                NVL(FUNC_QTD_DISPONIVEL(P.COD_PRODUTO, D.COD_DEPOSITO),0) AS QTD_DISPONIVEL,                               
                                P.CAMINHO_IMG_PRINCIPAL,
                                F.COD_FORNECEDOR,
@@ -69,7 +71,8 @@ namespace Ecommerce.Repositories.Produto
 									CAMPANHA_FORNECEDOR_PRODUTO CFP 
 								WHERE 
 									CFP.COD_PRODUTO = P.COD_PRODUTO 
-								AND CURDATE() BETWEEN CFP.DAT_INICIO_CAMPANHA AND CFP.DAT_FIM_CAMPANHA) AS IND_DESTAQUE
+								AND CURDATE() BETWEEN CFP.DAT_INICIO_CAMPANHA AND CFP.DAT_FIM_CAMPANHA) AS IND_DESTAQUE,
+                                D.COD_DEPOSITO
                            FROM
 	                           PRODUTO P
                            INNER JOIN CATEGORIA C ON P.COD_CATEGORIA = C.COD_CATEGORIA
@@ -93,14 +96,15 @@ namespace Ecommerce.Repositories.Produto
         {
             return new ProdutoVD
                 (
-                    Convert.ToInt32(dr["COD_PRODUTO"]),
+                    dr["COD_PRODUTO"].ToInt(),
                     dr["NOME_PRODUTO"].ToString(),
-                    Convert.ToDouble(dr["PRECO_CUSTO_MEDIO"]),
+                    dr["PRECO_CUSTO_MEDIO"].ToDouble(),
                     dr["CAMINHO_IMG_PRINCIPAL"].ToString(),                     
-                    Convert.ToInt32(dr["QTD_DISPONIVEL"]),
-                    new FornecedorVD(Convert.ToInt32(dr["COD_FORNECEDOR"]), dr["NOME_FORNECEDOR"].ToString()),
-                    new CategoriaVD(Convert.ToInt32(dr["COD_CATEGORIA"]), dr["NOME_CATEGORIA"].ToString()),
-                    Convert.ToBoolean(dr["IND_DESTAQUE"])
+                    dr["QTD_DISPONIVEL"].ToInt(),
+                    new FornecedorVD(dr["COD_FORNECEDOR"].ToInt(), dr["NOME_FORNECEDOR"].ToString()),
+                    new CategoriaVD(dr["COD_CATEGORIA"].ToInt(), dr["NOME_CATEGORIA"].ToString()),
+                    dr["IND_DESTAQUE"].ToBool(),
+                    dr["COD_DEPOSITO"].ToInt()
                 );
         }
 
