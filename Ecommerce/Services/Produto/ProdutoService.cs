@@ -17,6 +17,9 @@ namespace Ecommerce.Services.Produto
         public List<ProdutoVD> ListarProdutos() 
         {
             return _produtoRepository.ListarProdutos();
+        } public List<ProdutoVD> ListarProdutosRecomendados() 
+        {
+            return _produtoRepository.ListarProdutosRecomendados();
         }
 
         public ProdutoVD CarregarDetalheProduto(int codProduto)

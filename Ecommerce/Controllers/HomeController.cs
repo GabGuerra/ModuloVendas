@@ -21,7 +21,7 @@ namespace Ecommerce.Controllers
 
         public IActionResult Vitrine()
         {
-            return View(new VitrineVD(_produtoService.ListarProdutos(), _categoriaService.ListarCategorias()));
+            return View(new VitrineVD(_produtoService.ListarProdutos(), _categoriaService.ListarCategorias(), _produtoService.ListarProdutosRecomendados()));
         }
 
         public IActionResult Privacy()

@@ -9,6 +9,7 @@ namespace Ecommerce.Services.Produto
     public interface IProdutoService
     {
         public List<ProdutoVD> ListarProdutos();
+        public List<ProdutoVD> ListarProdutosRecomendados();
         public ProdutoVD CarregarDetalheProduto(int codProduto);
     }
 }

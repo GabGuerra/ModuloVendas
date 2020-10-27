@@ -53,6 +53,45 @@ namespace Ecommerce.Repositories.Produto
             return listaProdutos;
         }
 
+        public List<ProdutoVD> ListarProdutosRecomendados()
+        {
+            string sql = @"SELECT
+	                           P.COD_PRODUTO,
+                               P.NOME_PRODUTO,
+                               P.PRECO_CUSTO_MEDIO,
+                               NVL(FUNC_QTD_DISPONIVEL(P.COD_PRODUTO, D.COD_DEPOSITO),0) AS QTD_DISPONIVEL,                               
+                               P.CAMINHO_IMG_PRINCIPAL,
+                               F.COD_FORNECEDOR,
+                               F.NOME_FORNECEDOR,
+                               C.COD_CATEGORIA,
+                               C.NOME_CATEGORIA,
+                               (SELECT 
+									COUNT(1)
+								FROM 
+									CAMPANHA_FORNECEDOR_PRODUTO CFP 
+								WHERE 
+									CFP.COD_PRODUTO = P.COD_PRODUTO 
+								AND CURDATE() BETWEEN CFP.DAT_INICIO_CAMPANHA AND CFP.DAT_FIM_CAMPANHA) AS IND_DESTAQUE,
+                                D.COD_DEPOSITO
+                           FROM
+	                           PRODUTO P
+                           INNER JOIN CATEGORIA C ON P.COD_CATEGORIA = C.COD_CATEGORIA
+                           INNER JOIN FORNECEDOR F ON P.COD_FORNECEDOR = F.COD_FORNECEDOR
+                           INNER JOIN PRODUTO_DEPOSITO PD ON P.COD_PRODUTO = PD.COD_PRODUTO
+                           INNER JOIN DEPOSITO D ON PD.COD_DEPOSITO = D.COD_DEPOSITO                          
+                           ORDER BY IND_DESTAQUE DESC
+                           LIMIT 3";
+            //ALTERAR PELA QUERY Q TRAZ OS PRODUTOS RECOMENDADOS COM BASE NA CATEGORIA DOS PRODUTOS COMPRADOS ANTERIORMENTE.
+
+            List<ProdutoVD> listaProdutos = new List<ProdutoVD>();
+
+            using (var cmd = new MySqlCommand(sql))
+            {
+                listaProdutos = ObterRegistros(cmd).ToList();
+            }
+
+            return listaProdutos;
+        }
         public ProdutoVD CarregarDetalheProduto(int codProduto)
         {
             string sql = @"SELECT

@@ -9,6 +9,7 @@ namespace Ecommerce.Repositories.Produto
     public interface IProdutoRepository
     {
         public List<ProdutoVD> ListarProdutos();
+        public List<ProdutoVD> ListarProdutosRecomendados();
         public ProdutoVD CarregarDetalheProduto(int codProduto);
         public List<ImagemProdutoVD> ListarImagensProduto(int codProduto);
     }

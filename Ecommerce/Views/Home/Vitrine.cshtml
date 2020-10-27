@@ -3,20 +3,42 @@
     ViewData["Title"] = "Home Page";
     Layout = "_Layout";
 }
-<div class="slider-area ">    
+<div class="slider-area ">
+    @*<div class="single-slider slider-height2 d-flex align-items-center" data-background="~/assets/img/hero/category.jpg">*@
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="hero-cap text-center">
+                <h2>Produtos</h2>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="product_image_area" style="margin-top:2px !important">
     <div class="single-slider slider-height2 d-flex align-items-center" data-background="~/assets/img/hero/category.jpg">
         <div class="container">
-            <div class="row">
-                <div class="col-xl-12">
-                    <div class="hero-cap text-center">
-                        <h2>Produtos</h2>
-                    </div>
+            <div class="col-lg-12">
+                <h3> Produtos Recomendados: </h3>
+                <div class="product_img_slide owl-carousel">
+                    @{
+                        foreach (var produtoRecomendado in Model.ListaProdutoRecomendados)
+                        {
+                            <div class="single_product_img">
+                                <p> @produtoRecomendado.NomeProduto</p>
+                                <a href='@Url.Action("DetalheProduto","Produto", new { codProduto = produtoRecomendado.CodProduto })'>
+                                    <img src=@Url.Content(produtoRecomendado.CaminhoImagemPrincipal) alt="#" class="img-fluid" style="height:300px; width:300px; margin: 0 auto;">
+                                </a>
+                            </div>
+                        }
+                    }
                 </div>
             </div>
         </div>
     </div>
 </div>
-<section class="product_list section_padding">
+</div>
+<section class="product_list section_padding" style="padding-top: 30px">
     <div class="container">
         <div class="row">
             <div class="col-md-4">
@@ -30,11 +52,11 @@
 
                         </form>
                     </div>
-                    <div class="single_sedebar">                      
+                    <div class="single_sedebar">
                         <div class="select_option">
                             <div class="select_option_list">Categoria <i class="right fas fa-caret-down"></i> </div>
                             <div class="select_option_dropdown">
-                                @foreach (var categoria in  Model.ListaCategorias)
+                                @foreach (var categoria in Model.ListaCategorias)
                                 {
                                     <p><a href="#">@categoria.NomeCategoria</a></p>
                                 }
@@ -45,9 +67,9 @@
             </div>
             <div class="col-md-8">
                 <div class="product_list">
-                    <div class="row">                                               
+                    <div class="row">
                         @foreach (var p in Model.ListaProdutos)
-                        {   
+                        {
                             <div class="col-lg-6 col-sm-6">
                                 <div class="single_product_item">
                                     <img src="@Url.Content(p.CaminhoImagemPrincipal)" style="position: relative" class="img-fluid product_img">
