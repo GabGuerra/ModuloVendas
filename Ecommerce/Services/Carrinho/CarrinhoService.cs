@@ -29,7 +29,7 @@ namespace Ecommerce.Services.Carrinho
             try
             {
                 _carrinhoRepository.AdicionarItem(new CarrinhoItemVD(codProduto, qtdAdicionar), codCarrinho);
-                resultado = await ReservarEstoque(codProduto, qtdAdicionar, cpfUsuario, codDeposito);
+                resultado = await MovimentarEstoque(codProduto, qtdAdicionar, cpfUsuario, codDeposito, 7);
 
             }
             catch (Exception ex)
@@ -41,15 +41,14 @@ namespace Ecommerce.Services.Carrinho
             return resultado;
         }
 
-        public async Task<ResultadoVD> ReservarEstoque(int codProduto, int qtdAdicionar, string cpfUsuario, int codDeposito)
+        public async Task<ResultadoVD> MovimentarEstoque(int codProduto, int qtdAdicionar, string cpfUsuario, int codDeposito, int codTipoDocumento)
         {
-
             try
             {
                 using (var httpClient = new HttpClient())
                 {
                     Documento docMov = new Documento();
-                    docMov.TipoDocumento.CodTipoDocumento = 7;
+                    docMov.TipoDocumento.CodTipoDocumento = codTipoDocumento;
                     docMov.ListaMovimentacaoDetalhe = new List<MovimentacaoDetalhe>();
                     docMov.ListaMovimentacaoDetalhe.Add(new MovimentacaoDetalhe(new ProdutoMovimentacao(codProduto), qtdAdicionar, new Deposito(codDeposito)));
                     httpClient.DefaultRequestHeaders.Accept.Clear();
@@ -61,7 +60,6 @@ namespace Ecommerce.Services.Carrinho
                     var objResponse = res.Content.ReadAsStringAsync().Result;
 
                     return JsonConvert.DeserializeObject<ResultadoVD>(objResponse);
-
                 }
             }
             catch (Exception)
@@ -127,6 +125,26 @@ namespace Ecommerce.Services.Carrinho
                 resultado.Mensagem = $"Não foi possível remover o item ao carrinho. {Environment.NewLine}{ex.Message}";
             }
 
+            return resultado;
+        }
+
+        public async Task<ResultadoVD> CancelarCarrinho(int codCarrinho)
+        {
+            ResultadoVD resultado = new ResultadoVD(true);
+            try
+            {
+                var detalheCarrinho = CarregarDetalheCarrinho(codCarrinho);
+                foreach (var item in detalheCarrinho.ListaItens)
+                {
+                    resultado = await MovimentarEstoque(Convert.ToInt32(item.Produto.CodProduto), item.QtdProduto, null, item.Produto.CodDeposito, 7);
+                }
+                //Remove os detalhes do carrinho.       CHAMARA METOOD LIMPAR CARRINHO DO REPOSITORY
+            }
+            catch (Exception ex)
+            {
+                resultado.Sucesso = false;
+                resultado.Mensagem = $"Não foi possível cancelar o carrinho. {Environment.NewLine}{ex.Message}";
+            }
             return resultado;
         }
     }

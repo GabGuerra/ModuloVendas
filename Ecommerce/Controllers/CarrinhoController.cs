@@ -34,6 +34,11 @@ namespace Ecommerce.Controllers
             return Json(resultado);
         }
 
+        public JsonResult CancelarCarrinho(int codCarrinho)
+        {
+            return Json(_carrinhoService.CancelarCarrinho(Convert.ToInt32(Request.Cookies["codCarrinho"])));
+        }
+
         public IActionResult DetalheCarrinho() 
         {
             return View(_carrinhoService.CarregarDetalheCarrinho(Convert.ToInt32(Request.Cookies["codCarrinho"])));
