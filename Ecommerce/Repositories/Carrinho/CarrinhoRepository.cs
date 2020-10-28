@@ -133,5 +133,72 @@ namespace Ecommerce.Repositories.Carrinho
                 }
             }
         }
+
+        public long InserirPedido(string cpfUsuario)
+        {
+            string sql = @"INSERT INTO PEDIDO
+                                (CPF_USUARIO, DAT_PEDIDO, COD_SITUACAO_PEDIDO)
+                           VALUES 
+                                (@CPF_USUARIO, CURDATE(), 0);
+                           SELECT LAST_INSERT_ID();";
+
+            using (var cmd = new MySqlCommand(sql))
+            {
+                try
+                {
+                    cmd.Parameters.AddWithValue("@CPF_USUARIO", cpfUsuario);
+
+                    return ExecutarComando(cmd);
+                }
+                catch
+                {
+                    throw;
+                }
+            }
+        }
+
+        public void InserirPedidoItem(CarrinhoItemVD item, long codPedido)
+        {
+            string sql = @"INSERT INTO PEDIDO_ITEM
+	                           (QTD_PRODUTO,COD_PEDIDO,COD_PRODUTO)
+                           VALUES
+	                           (@QTD_PRODUTO, @COD_PEDIDO, @COD_PRODUTO)";
+
+            using (var cmd = new MySqlCommand(sql))
+            {
+                try
+                {
+                    cmd.Parameters.AddWithValue("@QTD_PRODUTO", item.QtdProduto);
+                    cmd.Parameters.AddWithValue("@COD_PEDIDO", codPedido);
+                    cmd.Parameters.AddWithValue("@COD_PRODUTO", item.Produto.CodProduto);
+
+                    ExecutarComando(cmd);
+                }
+                catch
+                {
+                    throw;
+                }
+            }
+        }
+
+        public void LimparCarrinho(int codCarrinho) 
+        {
+            string sql = @"DELETE FROM CARRINHO_ITEM CI WHERE CI.COD_CARRINHO = @COD_CARRINHO;";
+
+            using (var cmd = new MySqlCommand(sql))
+            {
+                try
+                {
+                    cmd.Parameters.AddWithValue("@COD_CARRINHO", codCarrinho);                    
+
+                    ExecutarComando(cmd);
+                }
+                catch
+                {
+                    throw;
+                }
+            }
+        }
     }
+
 }

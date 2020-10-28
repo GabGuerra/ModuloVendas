@@ -2,9 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Ecommerce.Models;
+using Ecommerce.Models.Carrinho;
 using Ecommerce.Models.Resultado;
 using Ecommerce.Services.Carrinho;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace Ecommerce.Controllers
 {
@@ -33,6 +37,13 @@ namespace Ecommerce.Controllers
         public IActionResult DetalheCarrinho() 
         {
             return View(_carrinhoService.CarregarDetalheCarrinho(Convert.ToInt32(Request.Cookies["codCarrinho"])));
+        }
+
+        public JsonResult FinalizarCompra(CarrinhoVD carrinho) 
+        {
+            var usuario = JsonConvert.DeserializeObject<UsuarioVD>(HttpContext.Session.GetString("usuarioLogado"));
+            carrinho.CpfUsuario = usuario.Cpf;
+            return Json(_carrinhoService.FinalizarCompra(carrinho));
         }
     }
 }

@@ -108,5 +108,26 @@ namespace Ecommerce.Services.Carrinho
 
             return resultado;
         }
+
+        public ResultadoVD FinalizarCompra(CarrinhoVD carrinho)
+        {
+            ResultadoVD resultado = new ResultadoVD(true);
+            try
+            {
+                var codPedido = _carrinhoRepository.InserirPedido(carrinho.CpfUsuario);
+                foreach (var item in carrinho.ListaItens)
+                {
+                    _carrinhoRepository.InserirPedidoItem(item, codPedido);
+                }
+                _carrinhoRepository.LimparCarrinho(carrinho.CodCarrinho);
+            }
+            catch (Exception ex)
+            {
+                resultado.Sucesso = false;
+                resultado.Mensagem = $"Não foi possível remover o item ao carrinho. {Environment.NewLine}{ex.Message}";
+            }
+
+            return resultado;
+        }
     }
 }

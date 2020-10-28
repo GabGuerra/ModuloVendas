@@ -23,6 +23,6 @@
 
 
     function RedirecionarParaPaginaInicial() {
-        window.location.href = window.location.origin + "/Home/Index";
+        window.location.href = window.location.origin + "/Home/Vitrine";
     };
 });

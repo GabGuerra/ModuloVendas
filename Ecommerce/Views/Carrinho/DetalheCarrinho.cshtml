@@ -2,11 +2,11 @@
 @{
     ViewData["Title"] = "DetalheCarrinho";
 }
+@using Microsoft.AspNetCore.Http;
+@using Newtonsoft.Json;
 <html>
 <body>
-    <!-- slider Area Start-->
-    <!-- slider Area End-->
-    <!--================Cart Area =================-->
+    <div id="modelDetalheCarrinho" data-model="@JsonConvert.SerializeObject(@Model)"></div>
     <section class="cart_area section_padding">
         <div class="container">
             <div class="cart_inner">
@@ -55,8 +55,6 @@
                                 </tr>
 
                             }
-
-
                             <tr>
                                 <td></td>
                                 <td></td>
@@ -69,15 +67,44 @@
                             </tr>
                         </tbody>
                     </table>
-                    
+
                     <div class="checkout_btn_inner float-right">
                         <a href="#" class="btn_1" style="background-color:#ca1527; margin-right:340px">Cancelar compra</a>
                         <a class="btn_1" href="#">Continuar comprando</a>
-                        <a class="btn_1 checkout_btn_1" href="@Url.Action("FinalizarCompra","Carrinho")">Finalizar compra</a>
+                        <a class="btn_1 checkout_btn_1" onclick="FinalizarCompra()">Finalizar compra</a>
                     </div>
                 </div>
             </div>
         </div>
     </section>
+
+    <!-- Modal -->
+    <div class="modal fade" id="modalLogin" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Realizar login</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="LoginForm" class="row contact_form">
+                        <div class="col-md-12 form-group p_star">
+                            <input type="text" class="form-control" id="inputEmail" name="inputEmail" value="" placeholder="email">
+                        </div>
+                        <div class="col-md-12 form-group p_star">
+                            <input type="password" class="form-control" id="inputSenha" name="inputSenha" value="" placeholder="senha">
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <button type="submit" style="cursor:pointer" value="submit" class="col-md-12 btn_3">LOGIN</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
+<script src="~/js/Login/Login.js"></script>
+<script src="~/js/Carrinho/DetalheCarrinho.js"></script>

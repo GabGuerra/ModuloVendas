@@ -35,5 +35,10 @@ namespace Ecommerce.Controllers
 
             return Json(result);
         }
+
+        public JsonResult VerificaUsuarioLogado() 
+        {
+            return Json(HttpContext.Session.GetString("usuarioLogado") != null);
+        }
     }
 }

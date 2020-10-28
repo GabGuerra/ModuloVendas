@@ -12,5 +12,8 @@ namespace Ecommerce.Repositories.Carrinho
         public void RemoverItem(CarrinhoItemVD item, int codCarrinho);
         public int CriarCarrinho(string cpfUsuario);
         public CarrinhoVD CarregarDetalheCarrinho(int codCarrinho);
+        public long InserirPedido(string cpfUsuario);
+        public void InserirPedidoItem(CarrinhoItemVD item, long codPedido);
+        public void LimparCarrinho(int codCarrinho);
     }
 }

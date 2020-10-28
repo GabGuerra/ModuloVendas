@@ -13,7 +13,7 @@ namespace Ecommerce.Services.Carrinho
         public ResultadoVD CriarCarrinho(string cpfUsuario);
         public Task<ResultadoVD> AdicionarItem(int codProduto, int qtdAdicionar, int codCarrinho, string cpfUsuario, int codDeposito);
         public ResultadoVD RemoverItem(int codProduto, int qtdRemover, int codCarrinho);
-
         public CarrinhoVD CarregarDetalheCarrinho(int codCarrinho);
+        public ResultadoVD FinalizarCompra(CarrinhoVD carrinho);
     }
 }

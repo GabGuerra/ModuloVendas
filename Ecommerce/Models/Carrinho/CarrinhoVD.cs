@@ -15,5 +15,9 @@ namespace Ecommerce.Models.Carrinho
             CodCarrinho = codCarrinho;
             ListaItens = new List<CarrinhoItemVD>();
         }
+        public CarrinhoVD()
+        {
+            ListaItens = new List<CarrinhoItemVD>();
+        }
     }
 }
