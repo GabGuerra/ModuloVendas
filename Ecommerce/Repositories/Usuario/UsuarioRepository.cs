@@ -18,7 +18,8 @@ namespace Ecommerce.Repositories.Usuario
             try
             {
                 string sql = @"INSERT INTO USUARIO(CPF,NOME_USUARIO) VALUES (@CPF,@NOME_USUARIO);
-                               INSERT INTO LOGIN(EMAIL,SENHA,CPF_USUARIO) VALUES (@EMAIL,@SENHA,@CPF);";
+                               INSERT INTO LOGIN(EMAIL,SENHA,CPF_USUARIO) VALUES (@EMAIL,@SENHA,@CPF);
+                               INSERT INTO CARRINHO(CPF_USUARIO) VALUES (@CPF);";
 
                 using (var cmd = new MySqlCommand(sql))
                 {

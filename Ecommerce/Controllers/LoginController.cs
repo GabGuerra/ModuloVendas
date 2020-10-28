@@ -31,14 +31,23 @@ namespace Ecommerce.Controllers
             if (result.Sucesso)
                 HttpContext.Session.SetString("usuarioLogado", JsonConvert.SerializeObject(usuario));
 
+            if (Convert.ToString(Request.Cookies["codCarrinho"]) != null)//quando for logar e possuir algo no cookie passa as infos pro carrinho do usuario.
+            {
+                var novoCodCarrinho = _loginService.TransferirDadosCarrinhoCookie(usuario.Cpf, Convert.ToInt32(Request.Cookies["codCarrinho"]));
+                Response.Cookies.Append("codCarrinho", novoCodCarrinho.ToString());
+            }
+            else if (result.Sucesso) //Se por algum motivo os cookies forem limpos, ao logar seta o cod do usuario logado
+                Response.Cookies.Append("codCarrinho", _loginService.GetCodCarrinhoLogado(usuario.Cpf).ToString());
+
             result.Mensagem = result.Sucesso ? string.Empty : "Email e/ou senha incorretos.";
 
             return Json(result);
         }
 
-        public JsonResult VerificaUsuarioLogado() 
+        public JsonResult VerificaUsuarioLogado()
         {
-            return Json(HttpContext.Session.GetString("usuarioLogado") != null);
+            var usuario = HttpContext.Session.GetString("usuarioLogado");
+            return Json(usuario != null && usuario != string.Empty);
         }
     }
 }

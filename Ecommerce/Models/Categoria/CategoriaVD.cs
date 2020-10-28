@@ -15,5 +15,9 @@ namespace Ecommerce.Models.Categoria
             CodCategoria = codCategoria;
             NomeCategoria = nomeCategoria;
         }
+        public CategoriaVD()
+        {
+
+        }
     }
 }

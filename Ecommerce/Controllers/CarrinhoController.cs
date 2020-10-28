@@ -29,7 +29,7 @@ namespace Ecommerce.Controllers
                 codCarrinhoCookie = Convert.ToInt32(resultado.Resultado);
                 Response.Cookies.Append("codCarrinho", codCarrinhoCookie.ToString());                
             }
-             _carrinhoService.AdicionarItem(codProduto, qtdProduto, codCarrinhoCookie.Value, cpfUsuario, codDeposito);
+            resultado = _carrinhoService.AdicionarItem(codProduto, qtdProduto, codCarrinhoCookie.Value, cpfUsuario, codDeposito).Result;
 
             return Json(resultado);
         }
@@ -44,11 +44,13 @@ namespace Ecommerce.Controllers
             return View(_carrinhoService.CarregarDetalheCarrinho(Convert.ToInt32(Request.Cookies["codCarrinho"])));
         }
 
-        public JsonResult FinalizarCompra(CarrinhoVD carrinho) 
+        [HttpPost]
+        public JsonResult FinalizarCompra(string carrinho) 
         {
             var usuario = JsonConvert.DeserializeObject<UsuarioVD>(HttpContext.Session.GetString("usuarioLogado"));
-            carrinho.CpfUsuario = usuario.Cpf;
-            return Json(_carrinhoService.FinalizarCompra(carrinho));
+            //carrinho.CpfUsuario = usuario.Cpf;
+            //return Json(_carrinhoService.FinalizarCompra(carrinho));
+            return Json("");
         }
     }
 }

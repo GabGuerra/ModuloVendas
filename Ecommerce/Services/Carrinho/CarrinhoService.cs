@@ -101,7 +101,7 @@ namespace Ecommerce.Services.Carrinho
             catch (Exception ex)
             {
                 resultado.Sucesso = false;
-                resultado.Mensagem = $"Não foi possível remover o item ao carrinho. {Environment.NewLine}{ex.Message}";
+                resultado.Mensagem = $"Não foi possível remover o item do carrinho. {Environment.NewLine}{ex.Message}";
             }
 
             return resultado;
@@ -122,7 +122,7 @@ namespace Ecommerce.Services.Carrinho
             catch (Exception ex)
             {
                 resultado.Sucesso = false;
-                resultado.Mensagem = $"Não foi possível remover o item ao carrinho. {Environment.NewLine}{ex.Message}";
+                resultado.Mensagem = $"Não foi possível finalizar a compra. {Environment.NewLine}{ex.Message}";
             }
 
             return resultado;

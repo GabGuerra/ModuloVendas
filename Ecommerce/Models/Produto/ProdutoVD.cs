@@ -24,6 +24,8 @@ namespace Ecommerce.Models.Produto
         public ProdutoVD()
         {
             Fornecedor = new FornecedorVD();
+            Categoria = new CategoriaVD();
+            ListaImagens = new List<ImagemProdutoVD>();
         }
         public ProdutoVD(int? codProduto)
         {

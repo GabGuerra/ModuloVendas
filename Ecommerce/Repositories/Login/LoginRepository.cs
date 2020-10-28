@@ -33,7 +33,8 @@ namespace Ecommerce.Repositories.Login
                 cmd.Parameters.AddWithValue("@SENHA", senha);
                 cmd.Parameters.AddWithValue("@EMAIL", email);
                 UsuarioVD usuario = ObterRegistro(cmd);
-                usuario.Login = new LoginVD(email, senha);
+                if(usuario !=null)
+                    usuario.Login = new LoginVD(email, senha);
                 return usuario;
             }
         }
@@ -45,6 +46,31 @@ namespace Ecommerce.Repositories.Login
                 Cpf = dr["CPF"].ToString(),
                 Nome = dr["NOME_USUARIO"].ToString()
             };
+        }
+
+        public void MigrarCarrinhoCookieParaLogado(string cpfUsuario, int codCarrinhoCookie)
+        {
+            var sql = @"CALL PROC_MIGRACAO_CARRINHO(@P_COD_CPF_USUARIO, @P_COD_CARRINHO_COOKIE)";
+
+            using (var cmd = new MySqlCommand(sql))
+            {
+                cmd.Parameters.AddWithValue("@P_COD_CPF_USUARIO", cpfUsuario);
+                cmd.Parameters.AddWithValue("@P_COD_CARRINHO_COOKIE", codCarrinhoCookie);                
+
+                ExecutarComando(cmd);
+            }
+        }
+
+        public int GetCodCarrinhoLogado(string cpfUsuario) 
+        {
+            var sql = @"SELECT COD_CARRINHO FROM CARRINHO WHERE CARRINHO.CPF_USUARIO = @CPF_USUARIO";
+
+            using (var cmd = new MySqlCommand(sql))
+            {
+                cmd.Parameters.AddWithValue("@CPF_USUARIO", cpfUsuario);                
+
+                return ExecutarComando(cmd);
+            }
         }
     }
 }

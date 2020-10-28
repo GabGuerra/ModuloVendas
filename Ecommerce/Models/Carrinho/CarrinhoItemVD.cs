@@ -10,6 +10,11 @@ namespace Ecommerce.Models.Carrinho
     {
         public ProdutoVD Produto { get; set; }
         public int QtdProduto { get; set; }
+
+        public CarrinhoItemVD()
+        {
+            Produto = new ProdutoVD();
+        }
         public CarrinhoItemVD(int codProduto, int qtdProduto)
         {
             Produto = new ProdutoVD(codProduto);

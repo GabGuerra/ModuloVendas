@@ -10,5 +10,7 @@ namespace Ecommerce.Services.Login
     public interface ILoginService
     {
         public UsuarioVD RealizarLogin(LoginVD login);
+        public int TransferirDadosCarrinhoCookie(string cpfUsuario, int codCarrinhoCookie);
+        public int GetCodCarrinhoLogado(string cpfUsuario);
     }
 }

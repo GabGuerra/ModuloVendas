@@ -24,21 +24,22 @@ function FinalizarCompra() {
 
 function ConcluirFinalizacaoCompra() {
     var model = $('#modelDetalheCarrinho').data('model');
-
+ 
+    var teste = JSON.stringify({ 'carrinho': model });
+    console.log(teste);
     $.ajax({
         url: "/Carrinho/FinalizarCompra",
-        data:
-        {
-            carrinho: model
-        },
+        data: teste,
         contentType: "application/json; charset=utf-8",
         dataType: "json",
+        type: "POST",
         success: function (result) {
-            if (result) {
-                ConcluirFinalizacaoCompra();
+            if (result.sucesso) {
+                alert("Pedido realizado com sucesso!");
+                RedirecionaParaPagina("Home/Vitrine");
             }
             else {
-                AbrirModalLogin();
+                alert(result.mensagem);
             }
         },
         error: function (result) {
