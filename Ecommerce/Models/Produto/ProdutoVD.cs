@@ -31,12 +31,13 @@ namespace Ecommerce.Models.Produto
         {
             CodProduto = codProduto;
         }
-        public ProdutoVD(int? codProduto, string nomeProduto, double? precoCustoMedio, string caminhoImagemPrincipal)
+        public ProdutoVD(int? codProduto, string nomeProduto, double? precoCustoMedio, string caminhoImagemPrincipal, int codDeposito)
         {
             CodProduto = codProduto;
             NomeProduto = nomeProduto;
             PrecoCustoMedio = precoCustoMedio;
             CaminhoImagemPrincipal = caminhoImagemPrincipal;
+            CodDeposito = codDeposito;
         }
         public ProdutoVD(int? codProduto, string nomeProduto, double? precoCustoMedio, string caminhoImagemPrincipal, int qtdDisponivel, FornecedorVD fornecedor, CategoriaVD categoria, bool indProdutoEmDestaque, int codDeposito)
         {

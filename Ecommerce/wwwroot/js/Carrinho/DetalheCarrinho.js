@@ -5,7 +5,7 @@
 function FinalizarCompra() {
     $.ajax({
         url: "/Login/VerificaUsuarioLogado",
-        data: {  },
+        data: {},
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (result) {
@@ -14,7 +14,7 @@ function FinalizarCompra() {
             }
             else {
                 AbrirModalLogin();
-            }                
+            }
         },
         error: function (result) {
             console.log(result);
@@ -50,4 +50,30 @@ function ConcluirFinalizacaoCompra() {
 
 function AbrirModalLogin() {
     $("#modalLogin").modal('show');
+};
+
+
+function CancelarCompra() {
+    var CodCarrinho = $('#modelDetalheCarrinho').data('model').CodCarrinho;
+    $.ajax({
+        url: "/Carrinho/CancelarCarrinho",
+        data:
+        {
+            codCarrinho: CodCarrinho
+        },
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (retorno) {
+            if (retorno.sucesso) {
+                alert("SUCESSO! " + retorno.mensagem);
+                RedirecionaParaPagina("Home", "Vitrine");
+            }
+            else {
+                alert(+"ERRO! ", retorno.mensagem)
+            }
+        },
+        error: function (result) {
+            alert(+"ERRO! ", retorno.Mensagem)
+        }
+    });
 };

@@ -76,7 +76,9 @@ namespace Ecommerce.Repositories.Shared
         {
             cmd.Connection = _conn;
             cmd.CommandType = CommandType.Text;
+            if(_conn.State != ConnectionState.Open)
             _conn.Open();
+            
             try
             {
                 return Convert.ToInt32(cmd.ExecuteScalar());

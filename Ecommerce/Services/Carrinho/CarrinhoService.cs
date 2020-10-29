@@ -136,9 +136,12 @@ namespace Ecommerce.Services.Carrinho
                 var detalheCarrinho = CarregarDetalheCarrinho(codCarrinho);
                 foreach (var item in detalheCarrinho.ListaItens)
                 {
-                    resultado = await MovimentarEstoque(Convert.ToInt32(item.Produto.CodProduto), item.QtdProduto, null, item.Produto.CodDeposito, 7);
+                    resultado = await MovimentarEstoque(Convert.ToInt32(item.Produto.CodProduto), item.QtdProduto, null, item.Produto.CodDeposito, 8);
+                    if (resultado.Sucesso == false)
+                        throw new Exception("Erro ao movimentar estoque");
                 }
-                //Remove os detalhes do carrinho.       CHAMARA METOOD LIMPAR CARRINHO DO REPOSITORY
+                _carrinhoRepository.LimparCarrinho(codCarrinho);
+                resultado.Mensagem = "Carrinho cancelado com sucesso";
             }
             catch (Exception ex)
             {

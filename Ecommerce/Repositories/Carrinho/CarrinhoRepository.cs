@@ -17,7 +17,7 @@ namespace Ecommerce.Repositories.Carrinho
 
         public void AdicionarItem(CarrinhoItemVD item, int codCarrinho)
         {
-            string sql = @"INSERT INTO CARRINHO_ITEM (QTD_ITEM, COD_PRODUTO, COD_CARRINHO) VALUES (@QTD_ITEM, @COD_PRODUTO, @COD_CARRINHO)";
+            string sql = @"INSERT INTO CARRINHO_ITEM (QTD_ITEM, COD_PRODUTO, COD_CARRINHO, DATA_ADICAO) VALUES (@QTD_ITEM, @COD_PRODUTO, @COD_CARRINHO, CURRENT_DATE)";
 
             using (var cmd = new MySqlCommand(sql))
             {
@@ -76,7 +76,8 @@ namespace Ecommerce.Repositories.Carrinho
                                     dr["COD_PRODUTO"].ToInt(),
                                     dr["NOME_PRODUTO"].ToString(),
                                     dr["PRECO_CUSTO_MEDIO"].ToDouble(),
-                                    dr["CAMINHO_IMAGEM"].ToString()
+                                    dr["CAMINHO_IMAGEM"].ToString(),
+                                    dr["COD_DEPOSITO"].ToInt()
                                 );
 
                             carrinho.ListaItens.Add(new CarrinhoItemVD(produto, dr["QTD_ITEM"].ToInt()));
@@ -183,7 +184,7 @@ namespace Ecommerce.Repositories.Carrinho
 
         public void LimparCarrinho(int codCarrinho) 
         {
-            string sql = @"DELETE FROM CARRINHO_ITEM CI WHERE CI.COD_CARRINHO = @COD_CARRINHO;";
+            string sql = @"DELETE FROM CARRINHO_ITEM WHERE COD_CARRINHO = @COD_CARRINHO";
 
             using (var cmd = new MySqlCommand(sql))
             {

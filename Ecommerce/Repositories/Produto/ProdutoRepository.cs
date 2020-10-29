@@ -82,6 +82,15 @@ namespace Ecommerce.Repositories.Produto
                            ORDER BY IND_DESTAQUE DESC
                            LIMIT 3";
             //ALTERAR PELA QUERY Q TRAZ OS PRODUTOS RECOMENDADOS COM BASE NA CATEGORIA DOS PRODUTOS COMPRADOS ANTERIORMENTE.
+            //            SELECT* from produto p where cod_categoria
+            //where p.cod_categoria in (
+            //SELECT  cod_categoria from produto prod
+            //inner join pedido_detalhe pedD on prod.cod_produto = pedD.cod_produto
+            //inner join pedido ped on pedD.cod_pedido = ped.cod_pedido
+            //where ped.cpf_usuario = @cpf_logado
+            //and ped.dat_pedido BETWEEN(current_date -10) and current_date
+            //)
+            //LIMIT 3;
 
             List<ProdutoVD> listaProdutos = new List<ProdutoVD>();
 
