@@ -12,6 +12,7 @@ using Newtonsoft.Json;
 
 namespace Ecommerce.Controllers
 {
+    [Controller]
     public class CarrinhoController : Controller
     {
         private readonly ICarrinhoService _carrinhoService;
@@ -44,13 +45,12 @@ namespace Ecommerce.Controllers
             return View(_carrinhoService.CarregarDetalheCarrinho(Convert.ToInt32(Request.Cookies["codCarrinho"])));
         }
 
-        [HttpPost]
-        public JsonResult FinalizarCompra(string carrinho) 
+    
+        public JsonResult FinalizarCompra(CarrinhoVD carrinho) 
         {
             var usuario = JsonConvert.DeserializeObject<UsuarioVD>(HttpContext.Session.GetString("usuarioLogado"));
-            //carrinho.CpfUsuario = usuario.Cpf;
-            //return Json(_carrinhoService.FinalizarCompra(carrinho));
-            return Json("");
+            carrinho.CpfUsuario = usuario.Cpf;
+            return Json(_carrinhoService.FinalizarCompra(carrinho));            
         }
     }
 }

@@ -23,16 +23,14 @@ function FinalizarCompra() {
 };
 
 function ConcluirFinalizacaoCompra() {
-    var model = $('#modelDetalheCarrinho').data('model');
- 
-    var teste = JSON.stringify({ 'carrinho': model });
-    console.log(teste);
+    var carrinho = $('#modelDetalheCarrinho').data('model');
+    
     $.ajax({
-        url: "/Carrinho/FinalizarCompra",
-        data: teste,
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
         type: "POST",
+        url: "/Carrinho/FinalizarCompra",
+        contentType: "application/json; charset=utf-8",
+        data: { carrinho },
+        dataType: "json",                
         success: function (result) {
             if (result.sucesso) {
                 alert("Pedido realizado com sucesso!");

@@ -28,16 +28,16 @@ namespace Ecommerce.Controllers
             ResultadoVD result = new ResultadoVD();
             UsuarioVD usuario = _loginService.RealizarLogin(login);
             result.Sucesso = usuario != null;
-            if (result.Sucesso)
-                HttpContext.Session.SetString("usuarioLogado", JsonConvert.SerializeObject(usuario));
-
-            if (Convert.ToString(Request.Cookies["codCarrinho"]) != null)//quando for logar e possuir algo no cookie passa as infos pro carrinho do usuario.
+            if (result.Sucesso) 
             {
-                var novoCodCarrinho = _loginService.TransferirDadosCarrinhoCookie(usuario.Cpf, Convert.ToInt32(Request.Cookies["codCarrinho"]));
-                Response.Cookies.Append("codCarrinho", novoCodCarrinho.ToString());
-            }
-            else if (result.Sucesso) //Se por algum motivo os cookies forem limpos, ao logar seta o cod do usuario logado
-                Response.Cookies.Append("codCarrinho", _loginService.GetCodCarrinhoLogado(usuario.Cpf).ToString());
+                HttpContext.Session.SetString("usuarioLogado", JsonConvert.SerializeObject(usuario));
+                Response.Cookies.Append("codCarrinho", _loginService.GetCodCarrinhoLogado(usuario.Cpf).ToString());  //Se por algum motivo os cookies forem limpos, ao logar seta o cod do usuario logado
+                if (Convert.ToString(Request.Cookies["codCarrinho"]) != null)//quando for logar e possuir algo no cookie passa as infos pro carrinho do usuario.
+                {
+                    var novoCodCarrinho = _loginService.TransferirDadosCarrinhoCookie(usuario.Cpf, Convert.ToInt32(Request.Cookies["codCarrinho"]));
+                    Response.Cookies.Append("codCarrinho", novoCodCarrinho.ToString());
+                }
+            }                       
 
             result.Mensagem = result.Sucesso ? string.Empty : "Email e/ou senha incorretos.";
 
